@@ -1,0 +1,50 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\linespread{1.15}
+
+\title{IDATT2104 - Arbeidskrav 2}
+\author{Gruppe 18}
+\date{\today}
+
+\begin{document}
+    \maketitle
+    \newpage
+
+    \tableofcontents
+
+    \newpage
+
+    
+    \section{Websocket}
+    \subsection{Teori}
+    Det er en del forskjeller fra HTTP og Websockets. Den største forskjellen går på hvordan en får tak i ny data.
+    Dersom en ønsker å skaffe ny data etter hvert som ny data dukker opp, og man bruker HTTP, så er klienten 
+    nødt til å sende en ny forespørsel til tjeneren for hver gang den ønsker ny data. A.K.A Polling med intervall. 
+    Tjeneren vil sende en respons tilbake kun dersom en tjener spør om det.
+    Websockets derimot, setter opp en to-veis tilkobling mellom tjeneren og klienten, som gjør at tjeneren og 
+    klienten kan få data etterhvert som ny data dukker opp. Det er event-basert, slik at når tjeneren mottar data 
+    fra en klient, så kan tjeneren sende et event til alle tilkoblede klienter som sier at ett eller annet har skjedd, 
+    med noe tilhørende data.
+    
+    Websockets er veldig attraktive for sanntids-oppdateringer. Grunnen til dette, er at det tar en del mer ressurser 
+    dersom vi skal sette opp en helt ny TCP-tilkobling og handshakes for hver eneste gang vi vil ha data. Dersom vi 
+    ønsker å gjøre dette veldig ofte, så blir det mye overhead som vi ikke ønsker. Websockets fikser dette ved å ha 
+    litt overhead når vi setter opp en tilkoblng og gjøre et Websocket-handshake, men når vi overfører data, så 
+    er meldingene mindre, og gjør at vi kan sende data langt oftere i praktiske tilfeller.
+
+
+    
+    \subsection{Praktisk}
+    \section{Bruk av SSH med CI/CD}
+    \subsection{Enkel klient/tjener}
+    
+    
+\end{document}

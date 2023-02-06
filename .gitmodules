@@ -1,0 +1,7 @@
+[submodule "programming/5"]
+	path = programming/5
+	url = https://github.com/IntrntSrfr/web-code
+
+[submodule "programming/gonion"]
+	path = programming/gonion
+	url = https://github.com/IntrntSrfr/gonion

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>weed</title>
+    <style>
+        body {
+            color: white;
+            background-color: #181818;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .app {
+            margin: 100px auto;
+            width: 800px;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            background-color: #252525;
+        }
+
+        .inp-text {
+            flex-grow: 1;
+            padding: 1.5em;
+        }
+
+        .inp-text+.inp-text {
+            border-left: 1px solid #616161;
+        }
+
+        .inp {
+            width: 100%;
+            font-size: 18px;
+            color: white;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid white;
+        }
+
+        .inp:focus-visible {
+            outline: none;
+        }
+
+        .btn {
+            margin-right: 2em;
+            padding: .75em 2em;
+            background-color: #7cf058;
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .btn:hover {
+            background-color: #6ddb4b;
+        }
+
+        .chat {
+            max-height: 40em;
+            overflow-y: auto;
+            margin-top: 1em;
+            padding: .5em 1em;
+            border: 1px solid #3e3e3e;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            padding: .5em 0;
+        }
+
+        .message+.message {
+            border-top: 1px solid #e3e3e3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <h2 class="title">
+            WebSocket chat page
+        </h2>
+        <div class="header">
+            <div class="inp-text">
+                <input class="inp unm" type="text" placeholder="Who are you?">
+            </div>
+            <div class="inp-text">
+                <input class="inp message" type="text" placeholder="Message the boys">
+            </div>
+            <button class="btn">Send</button>
+        </div>
+        <div class="chat">
+        </div>
+        <script>
+            let input = document.querySelector(".message")
+            let username = document.querySelector(".unm")
+            let send = document.querySelector("button")
+            let chat = document.querySelector('.chat')
+            let ws = new WebSocket('ws://localhost:3001');
+
+            send.onclick = () => {
+                if (!input.value || !username.value) {
+                    return
+                }
+                ws.send(JSON.stringify({
+                    username: username.value,
+                    message: input.value
+                }))
+                input.value = ""
+                input.focus()
+            }
+
+            ws.onmessage = (e) => {
+                let d = document.createElement('div')
+                let data = JSON.parse(e.data)
+                d.innerHTML = data.username + ': ' + data.message
+                d.className = "message"
+                //chat.appendChild(d)
+                chat.prepend(d)
+            }
+        </script>
+    </div>
+</body>
+
+</html>
