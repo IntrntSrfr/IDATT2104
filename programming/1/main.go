@@ -40,7 +40,7 @@ func main() {
 	wg.Add(threads)
 	startTime := time.Now()
 	for i := 0; i < threads; i++ {
-		go findPrimes(i, end, threads, numCh, wg)
+		go findPrimes(start + i, end, threads, numCh, wg)
 	}
 	wg.Wait() // wait for all prime threads
 	cancel()
